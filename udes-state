@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+CLIENT=/opt/cisco/anyconnect/bin/vpn
+
+$CLIENT state | grep state | head -n 1 | cut -d " " -f 5

@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# This script will connect this computer to the VPN server
+
+# The location of the file containing the password
+PASSFILE=$HOME/.udespass
+CLIENT=/opt/cisco/anyconnect/bin/vpn
+VPN_HOST=rpv.usherbrooke.ca
+
+check_auth() {
+	if [ -f "$PASSFILE" ]; then
+		PERMISSIONS=$(stat -c %a $PASSFILE)
+
+		# Verify that the passfile is secure enough
+		if [ "$PERMISSIONS" = "600" ]; then
+			if [ -z ${UDES_USER+x} ]; then
+				echo "UDES_USER has not been set. Cannot proceed."
+				exit 1
+			fi
+		else
+			echo "$PASSFILE should have it's permissions set to 600"	
+			exit 1
+		fi
+	fi
+}
+
+# Start of script
+check_auth 
+
+UDES_PASS=$(head -n 1 $PASSFILE)
+
+printf "$UDES_USER\n$UDES_PASS\ny" | $CLIENT -s connect $VPN_HOST 
