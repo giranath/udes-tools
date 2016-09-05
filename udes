@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+COMMAND=$1
+shift
+ARGUMENTS=$@
+
+if [ -z $UDES_DIR ]; then
+	echo "Can't find UdeS binaries directory. Please set the variable UDES_DIR to the correct location"
+	exit 1
+else
+	# Execute the script associated with the command
+	"$UDES_DIR/udes-$COMMAND" $ARGUMENTS
+fi
