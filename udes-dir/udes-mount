@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+HOST=argus.dinf.usherbrooke.ca
+PASS=$(cat $HOME/.udespass)
+VOLUME=$1
+
+if [ $VOLUME = "public" ] ; then
+	mount -t cifs -o username=$UDES_USER,password=$PASS //$HOST/public /media/udes/public
+elif [ $VOLUME = "personnel" ] ; then
+	mount -t cifs -o username=$UDES_USER,password=$PASS //$HOST/bacc$/$UDES_USER /media/udes/personnel
+else
+	echo "Unsupported volume"
+	exit 1
+fi

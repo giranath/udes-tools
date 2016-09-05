@@ -8,6 +8,9 @@ usage() {
 	echo "  connect     Connect to the VPN"
 	echo "  disconnect  Disconnect from the VPN"
 	echo "  state       Display the VPN's connection state"
+	echo "\nManage shared volumes"
+	echo "  mount       Mount a shared volume"
+	echo "  umount      Unmount a shared volume"
 }
 
 help() {
@@ -17,6 +20,8 @@ help() {
 	echo "  connect     Connect this computer to the University's VPN"
 	echo "  disconnect  Disconnect this computer from the University's VPN"
 	echo "  state       Display the connection's state"
+	echo "  mount       Mount a shared volume"
+	echo "  umount      Unmount a shared volume"
 
 	echo "\nEnvironment variables"
 	echo "  UDES_DIR    The directories where the tools are installed"
