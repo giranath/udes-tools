@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+VOLUME=$1
+
+if [ $VOLUME = "public" ] ; then
+	umount /media/udes/public
+elif [ $VOLUME = "personnel" ] ; then
+	umount /media/udes/personnel
+else
+	echo "Unsupported volume"
+	exit 1
+fi
