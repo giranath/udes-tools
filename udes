@@ -1,13 +1,57 @@
 #!/usr/bin/env sh
 
-COMMAND=$1
-shift
-ARGUMENTS=$@
+usage() {
+	echo "usage: udes [--version][--help] <command> [<args>]"
 
-if [ -z $UDES_DIR ]; then
+	echo "\nThese are commong Udes commands:"
+	echo "\nManage the VPN"
+	echo "  connect     Connect to the VPN"
+	echo "  disconnect  Disconnect from the VPN"
+	echo "  state       Display the VPN's connection state"
+}
+
+help() {
+	echo "udes is a tool to simplify common tasks with the Université de Sherbrooke IT infrastructure."
+
+	echo "\nSupported commands are"
+	echo "  connect     Connect this computer to the University's VPN"
+	echo "  disconnect  Disconnect this computer from the University's VPN"
+	echo "  state       Display the connection's state"
+
+	echo "\nEnvironment variables"
+	echo "  UDES_DIR    The directories where the tools are installed"
+	echo "  UDES_USER   Your CIP"
+
+	echo "\nFiles"
+	echo "  $HOME/.udespass Should contains your password in clear text. The permissions of this file must be 0600"
+
+	echo "\nReport bugs to: Nathan.Giraldeau@USherbrooke.ca"
+}
+
+version() {
+	echo "udes 1.0"
+}
+
+COMMAND=$1
+
+if [ -z $UDES_DIR ] ; then
 	echo "Can't find UdeS binaries directory. Please set the variable UDES_DIR to the correct location"
 	exit 1
 else
-	# Execute the script associated with the command
-	"$UDES_DIR/udes-$COMMAND" $ARGUMENTS
+	if [ -z $COMMAND ] ; then
+		usage	
+	elif [ "$COMMAND" = "--help" ] || [ "$COMMAND" = "-h" ] ; then
+		help
+	elif [ "$COMMAND" = "--version" ] || [ "$COMMAND" = "-v" ] ; then
+		version
+	else
+		shift
+		ARGUMENTS=$@
+
+		if [ -f "$UDES_DIR/udes-$COMMAND" ] ; then
+			"$UDES_DIR/udes-$COMMAND" $ARGUMENTS
+		else
+			usage
+		fi
+	fi
 fi

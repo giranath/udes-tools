@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+_udes() {
+	local cur prev opts
+
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+	if [[ ${prev} == "udes" ]]; then
+		opts="connect disconnect state"
+		COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+		return 0
+	fi
+}
+
+complete -F _udes udes
